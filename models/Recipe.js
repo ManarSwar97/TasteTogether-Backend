@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose')
+const mongoose = require('mongoose');
+const { Schema } = mongoose; 
 
 const recipeSchema = new Schema(
 {
@@ -27,7 +28,7 @@ const recipeSchema = new Schema(
         required: true,
     },
     user:{
-        type: mongoose.schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
     }

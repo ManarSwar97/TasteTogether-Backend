@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose')
+const mongoose = require('mongoose');
+const { Schema } = mongoose; 
 
 const commentSchema = new Schema(
   {
@@ -7,11 +8,11 @@ const commentSchema = new Schema(
         required: true,
     },
     user:{
-        type: mongoose.schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
     },
     post:{
-        type: mongoose.schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Post',
         required: true,
     }

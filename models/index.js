@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const userSchema = require('../User')
 const postSchema = require('../Post')
 const commentSchema = require('../Comment')

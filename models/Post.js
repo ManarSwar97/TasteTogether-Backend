@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose')
+const mongoose = require('mongoose');
+const { Schema } = mongoose; 
 
 const postSchema = new Schema(
   {
@@ -10,11 +11,11 @@ const postSchema = new Schema(
         type: String, 
     },
     likes:[{
-        type: mongoose.schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
         ref: 'User',
     }],
     user:{
-        type: mongoose.schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
     }
