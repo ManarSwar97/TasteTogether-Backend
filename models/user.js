@@ -8,12 +8,11 @@ const userSchema = new Schema(
     email: { type: String, required: true },
     password: { type: String, required: true },
     image: { type: String },
-    type_of_food:{
-        type:[String], 
-        required: true
+    type_of_food: {
+      type: [String],
+      required: true
     }
   },
   { timestamps: true }
 )
-
 module.exports = userSchema

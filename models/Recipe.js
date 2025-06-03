@@ -1,7 +1,7 @@
 const { Schema } = require('mongoose')
 
 const recipeSchema = new Schema(
-  {
+{
     recipe_name:{
         type: String,
         required: true,
