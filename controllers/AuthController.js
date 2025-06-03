@@ -2,7 +2,7 @@ const { User } = require('../models')
 const middleware = require('../middleware')
 const Register = async (req, res) => {
   try {
-    const { password, username, first_name, last_name, email, image, type_of_food } = req.body
+    const { password, username, firstName, lastName, email, image, typeOfFood } = req.body
     let passwordDigest = await middleware.hashPassword(password)
 
     let existingUser = await User.findOne({ username })
@@ -14,11 +14,11 @@ const Register = async (req, res) => {
       const user = await User.create({
         passwordDigest,
         username,
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         email,
         image,
-        type_of_food
+        typeOfFood
       })
 
       res.send(user)
