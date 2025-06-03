@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
   {
-    first_name: { type: String },
-    last_name: { type: String},
-    username: { type: String},
-    email: { type: String},
-    password: { type: String},
+    first_name: { type: String, required: true },
+    last_name: { type: String, required: true},
+    username: { type: String, required: true},
+    email: { type: String, required: true},
+    passwordDigest: { type: String, required: true},
     image: { type: String },
     type_of_food: {
       type: [String],
