@@ -1,10 +1,27 @@
 {
+  "name": "tastetogether-backend",
+  "version": "1.0.0",
+  "description": "---",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManarSwar97/TasteTogether-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManarSwar97/TasteTogether-Backend/issues"
+  },
+  "homepage": "https://github.com/ManarSwar97/TasteTogether-Backend#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "express-session": "^1.18.1",
-    "method-override": "^3.0.0",
     "mongoose": "^8.15.1",
     "morgan": "^1.10.0"
   }
