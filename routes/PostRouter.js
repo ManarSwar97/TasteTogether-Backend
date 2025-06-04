@@ -2,16 +2,7 @@ const controller = require('../controllers/PostController')
 const middleware = require('../middleware')
 const express = require('express')
 const router = express.Router()
-const multer = require('multer')
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-const upload = multer({ storage: storage })
+const upload = require('../middleware/multer')
 router.get('/', controller.GetPosts)
 router.post('/', 
     middleware.stripToken, 
@@ -19,6 +10,19 @@ router.post('/',
     upload.single('postImage'),
     controller.CreatePost,
     
+)
+router.put('/:post_id',
+  middleware.stripToken,
+  middleware.verifyToken,
+  upload.single('postImage'),
+  controller.UpdatePost
+)
+router.delete(
+  '/:post_id',
+  middleware.stripToken,
+  middleware.verifyToken,
+  upload.single('postImage'),
+  controller.DeletePost
 )
 
 module.exports = router
