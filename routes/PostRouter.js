@@ -24,5 +24,9 @@ router.delete(
   upload.single('postImage'),
   controller.DeletePost
 )
-
+router.post('/:post_id/like',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.LikePost
+)
 module.exports = router

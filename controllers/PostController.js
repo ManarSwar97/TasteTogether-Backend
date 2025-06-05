@@ -46,9 +46,29 @@ const DeletePost = async (req, res) => {
     throw error
   }
 }
+
+const LikePost = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id 
+    const post = await Post.findById(req.params.post_id);
+    const alreadyLiked = post.likes.some(id => id.toString() === userId);
+    if (!alreadyLiked) {
+      post.likes.push(userId);
+      await post.save();
+    }
+    res.send(String(post.likes.length));
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+};
+
+
+
 module.exports = {
   GetPosts,
   CreatePost,
   UpdatePost,
-  DeletePost
+  DeletePost,
+  LikePost
 }
