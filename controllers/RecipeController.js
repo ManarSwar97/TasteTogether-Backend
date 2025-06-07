@@ -114,90 +114,90 @@ const getAllRecipes = async (req, res) => {
   }
 }
 
-// //get recipes from the database by id
-// const getRecipeDB = async (req, res) => {
-//   try {
-//     const id = req.params.id
-//     const recipe = await Recipe.findById(id).populate('user', 'username')
-//     if (!recipe) {
-//       return res.status(404).json({ error: 'Recipe not found' })
-//     }
-//     return res.json(recipe)
-//   } catch (error) {
-//     //if theres an error then show this
-//     res.status(500).json({ error: 'Failed to fetch recipe by Id' })
-//   }
-// }
+//get recipes from the database by id
+const getRecipeDB = async (req, res) => {
+  try {
+    const id = req.params.id
+    const recipe = await Recipe.findById(id).populate('user', 'username')
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' })
+    }
+    return res.json(recipe)
+  } catch (error) {
+    //if theres an error then show this
+    res.status(500).json({ error: 'Failed to fetch recipe by Id' })
+  }
+}
 
-// //to edit the recipe
-// const editRecipe = async (req, res) => {
-//   try {
-//     //get the id of the recipe
-//     const id = req.params.id
-//     //find the recipe by id
-//     const recipe = await Recipe.findById(id)
+//to edit the recipe
+const editRecipe = async (req, res) => {
+  try {
+    //get the id of the recipe
+    const id = req.params.id
+    //find the recipe by id
+    const recipe = await Recipe.findById(id)
 
-//     if (!recipe) {
-//       return res.status(404).json({ error: 'Recipe not found' })
-//     }
-//   } catch (error) {
-//     //if theres an error then show this
-//     res.status(500).json({ error: 'Failed to fetch recipe for edit' })
-//   }
-// }
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' })
+    }
+  } catch (error) {
+    //if theres an error then show this
+    res.status(500).json({ error: 'Failed to fetch recipe for edit' })
+  }
+}
 
-// const updateRecipe = async (req, res) => {
-//   try {
-//     //get the id of the recipe
-//     const id = req.params.id
-//     const {
-//       recipeName,
-//       recipeDescription,
-//       recipeInstruction,
-//       recipeIngredient,
-//       recipeCategory,
-//       user: userId
-//     } = req.body
-//     // find the recipe by id
-//     const recipe = await Recipe.findById(id)
+const updateRecipe = async (req, res) => {
+  try {
+    //get the id of the recipe
+    const id = req.params.id
+    const {
+      recipeName,
+      recipeDescription,
+      recipeInstruction,
+      recipeIngredient,
+      recipeCategory,
+      user: userId
+    } = req.body
+    // find the recipe by id
+    const recipe = await Recipe.findById(id)
 
-//     //if the recipe not found
-//     if (!recipe) {
-//       return res.status(404).json({ error: 'Recipe not found' })
-//     }
+    //if the recipe not found
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' })
+    }
 
-//     // the new details the user provide
-//     recipe.recipeName = recipeName
-//     recipe.recipeDescription = recipeDescription
-//     recipe.recipeInstruction = recipeInstruction
-//     recipe.recipeIngredient = recipeIngredient
-//     recipe.recipeCategory = recipeCategory
-//     recipe.recipeImage = req.file ? req.file.path : recipe.recipeImage
-//     recipe.user = userId
+    // the new details the user provide
+    recipe.recipeName = recipeName
+    recipe.recipeDescription = recipeDescription
+    recipe.recipeInstruction = recipeInstruction
+    recipe.recipeIngredient = recipeIngredient
+    recipe.recipeCategory = recipeCategory
+    recipe.recipeImage = req.file ? req.file.path : recipe.recipeImage
+    recipe.user = userId
 
-//     //save it in the database
-//     const updatedRecipe = await recipe.save()
-//     res.json(updatedRecipe)
-//   } catch (error) {
-//     //if theres an error then show this
-//     res.status(500).json({ error: 'Failed to update recipe' })
-//   }
-// }
+    //save it in the database
+    const updatedRecipe = await recipe.save()
+    res.json(updatedRecipe)
+  } catch (error) {
+    //if theres an error then show this
+    res.status(500).json({ error: 'Failed to update recipe' })
+  }
+}
 
-// //delete the recipe
-// const deleteRecipe = async (req, res) => {
-//   try {
-//     //to get the id
-//     const id = req.params.id
-//     const deleteRecipe = await Recipe.findByIdAndDelete(id)
-//     if (!deleteRecipe) {
-//       return res.status(404).json({ error: 'Recipe not found' })
-//     }
-//   } catch (error) {
-//     //if theres an error then show this
-//     res.status(500).json({ error: 'Failed to delete recipe' })
-//   }
-// }
+//delete the recipe
+const deleteRecipe = async (req, res) => {
+  try {
+    //to get the id
+    const id = req.params.id
+    const deleteRecipe = await Recipe.findByIdAndDelete(id)
+    if (!deleteRecipe) {
+      return res.status(404).json({ error: 'Recipe not found' })
+    }
+  } catch (error) {
+    //if theres an error then show this
+    res.status(500).json({ error: 'Failed to delete recipe' })
+  }
+}
 
 module.exports = {
   searchRecipes,
@@ -206,5 +206,9 @@ module.exports = {
   getRecipeByCategory,
   createRecipe,
   getAllRecipes,
-  getAllAPIRecipes
+  getAllAPIRecipes,
+  getRecipeDB,
+  editRecipe,
+  deleteRecipe,
+  updateRecipe
 }
