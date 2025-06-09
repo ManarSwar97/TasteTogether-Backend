@@ -6,6 +6,7 @@ const path = require('path')
 const AuthRouter = require('./routes/AuthRouter')
 const PostRouter = require('./routes/PostRouter')
 const RecipeRouter = require('./routes/RecipeRouter')
+const commentRouter = require('./routes/CommentRouter');
 
 const PORT = process.env.PORT || 3001
 
@@ -22,6 +23,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/auth', AuthRouter)
 app.use('/posts', PostRouter)
 app.use('/recipe', RecipeRouter)
+app.use('/comments', commentRouter);
 
 app.use('/', (req, res) => {
   res.send(`Connected!`)

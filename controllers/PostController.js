@@ -25,7 +25,11 @@ const CreatePost = async (req, res) => {
 }
 const UpdatePost = async (req, res) => {
   try{
-    const updatedPost = await Post.findByIdAndUpdate(req.params.post_id, req.body,{
+    const updateFields = {
+      postImage: req.file.filename,
+      postDescription: req.file.postDescription
+    }
+    const updatedPost = await Post.findByIdAndUpdate(req.params.post_id, updateFields,{
     new: true
     }
 )
@@ -42,9 +46,29 @@ const DeletePost = async (req, res) => {
     throw error
   }
 }
+
+const LikePost = async (req, res) => {
+  try {
+    const userId = res.locals.payload.id 
+    const post = await Post.findById(req.params.post_id);
+    const alreadyLiked = post.likes.some(id => id.toString() === userId);
+    if (!alreadyLiked) {
+      post.likes.push(userId);
+      await post.save();
+    }
+    res.send(String(post.likes.length));
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+};
+
+
+
 module.exports = {
   GetPosts,
   CreatePost,
   UpdatePost,
-  DeletePost
+  DeletePost,
+  LikePost
 }
