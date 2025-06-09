@@ -96,10 +96,11 @@ const createRecipe = async (req, res) => {
   }
 }
 
+
 //get all recipes from the database
 const getAllRecipes = async (req, res) => {
   try {
-    const recipes = await Recipe.find({}).populate('user', 'username image')
+    const recipes = await Recipe.find({})
     //it will take the username and image.
     res.status(200).send(recipes)
   } catch (error) {
