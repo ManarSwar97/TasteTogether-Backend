@@ -27,7 +27,7 @@ const UpdatePost = async (req, res) => {
   try{
     const updateFields = {
       postImage: req.file.filename,
-      postDescription: req.file.postDescription
+      postDescription: req.body.postDescription
     }
     const updatedPost = await Post.findByIdAndUpdate(req.params.post_id, updateFields,{
     new: true
