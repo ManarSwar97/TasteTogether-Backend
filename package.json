@@ -28,6 +28,8 @@
     "mongoose": "^8.15.1",
     "morgan": "^1.10.0",
     "multer": "^2.0.1",
+    "socket.io": "^4.8.1",
+    "uuid": "^11.1.0"
     "react-icons": "^5.5.0"
   }
 }
