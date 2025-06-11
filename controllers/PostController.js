@@ -10,8 +10,17 @@ const { Post } = require('../models')
 
 const GetPosts = async (req, res) => {
   try {
-    const posts = await Post.find({}).populate('user')
-    res.send(posts)
+    // Get user ID from query
+    const userId = req.query.user
+    let posts //define post
+    if (userId) {
+      // If userId exists, find posts for that user
+      posts = await Post.find({ user: userId })
+    } else {
+      // Otherwise, find all posts
+      posts = await Post.find({})
+    }
+    res.status(200).json(posts) // Send posts
   } catch (error) {
     throw error
   }
