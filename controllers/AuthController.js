@@ -2,7 +2,8 @@ const { User } = require('../models')
 const middleware = require('../middleware')
 const Register = async (req, res) => {
   try {
-    const { password, username, firstName, lastName, email, image, typeOfFood } = req.body
+    const { password, username, firstName, lastName, email, typeOfFood } =
+      req.body
     let passwordDigest = await middleware.hashPassword(password)
 
     let existingUser = await User.findOne({ username })
@@ -10,19 +11,21 @@ const Register = async (req, res) => {
       return res
         .status(400)
         .send('A user with that username has already been registered!')
-    } else {
-      const user = await User.create({
-        passwordDigest,
-        username,
-        firstName,
-        lastName,
-        email,
-        image,
-        typeOfFood
-      })
-
-      res.send(user)
     }
+    // get uploaded file name from multer middleware
+    let image = req.file ? req.file.filename : null
+
+    const user = await User.create({
+      passwordDigest,
+      username,
+      firstName,
+      lastName,
+      email,
+      image,
+      typeOfFood
+    })
+
+    res.send(user)
   } catch (error) {
     console.log(error)
     res.status(401).send({
@@ -43,7 +46,8 @@ const Login = async (req, res) => {
     if (matched) {
       let payload = {
         id: user._id,
-        username: user.username
+        username: user.username,
+        image: user.image
       }
       let token = middleware.createToken(payload)
       return res.send({ user: payload, token })
@@ -57,7 +61,19 @@ const Login = async (req, res) => {
   }
 }
 
+const CheckSession = async (req, res) => {
+  try {
+    //get the user info stored in locals (from middleware)
+    const userPayload = res.locals.payload
+    //send the user info
+    res.status(200).json(userPayload)
+  } catch (error) {
+    res.status(401).send({ status: 'Error', msg: 'Invalid session' })
+  }
+}
+
 module.exports = {
   Register,
-  Login
+  Login,
+  CheckSession
 }

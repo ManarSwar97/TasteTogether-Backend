@@ -28,7 +28,7 @@ const GetCommentsByPost = async(req, res) =>{
   try{
   const postId = req.params.postId
   console.log(postId)
-  const comments = await Comment.find({post: postId})
+  const comments = await Comment.find({post: postId}).populate('user', 'username') 
   res.status(200).send(comments);  
   }
   catch (error) {
