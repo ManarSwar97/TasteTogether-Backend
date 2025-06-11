@@ -12,7 +12,6 @@ const GetPosts = async (req, res) => {
   try {
     // Get user ID from query
     const userId = req.query.user
-
     let posts //define post
     if (userId) {
       // If userId exists, find posts for that user

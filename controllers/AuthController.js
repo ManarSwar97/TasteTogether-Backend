@@ -2,17 +2,31 @@ const { User } = require('../models')
 const middleware = require('../middleware')
 const Register = async (req, res) => {
   try {
-    const { password, username, firstName, lastName, email, typeOfFood } =
-      req.body
-    let passwordDigest = await middleware.hashPassword(password)
+    const {
+      password,
+      username,
+      firstName,
+      lastName,
+      email,
+      typeOfFood,
+      confirmPassword
+    } = req.body
+
+    if (password !== confirmPassword) {
+      return res
+        .status(400)
+        .send({ msg: 'Password and confirm password do not match!' })
+    }
 
     let existingUser = await User.findOne({ username })
     if (existingUser) {
       return res
         .status(400)
-        .send('A user with that username has already been registered!')
+        .send({ msg: 'A user with that username has already been registered!' })
     }
-    // get uploaded file name from multer middleware
+
+    let passwordDigest = await middleware.hashPassword(password)
+
     let image = req.file ? req.file.filename : null
 
     const user = await User.create({
@@ -28,21 +42,30 @@ const Register = async (req, res) => {
     res.send(user)
   } catch (error) {
     console.log(error)
-    res.status(401).send({
-      status: 'Error',
+    res.status(500).send({
       msg: 'An error has occurred registering the user!'
     })
   }
 }
 
+
 const Login = async (req, res) => {
   try {
     const { username, password } = req.body
     const user = await User.findOne({ username })
+
+    if (!user) {
+      return res.status(401).send({ status: 'Error', msg: 'Invalid username' })
+    }
     let matched = await middleware.comparePassword(
       password,
       user.passwordDigest
     )
+    
+    if (!matched) {
+      return res.status(401).send({ status: 'Error', msg: 'Invalid password' })
+    }
+    
     if (matched) {
       let payload = {
         id: user._id,
