@@ -12,14 +12,13 @@ const GetPosts = async (req, res) => {
   try {
     // Get user ID from query
     const userId = req.query.user
-
     let posts //define post
     if (userId) {
       // If userId exists, find posts for that user
-      posts = await Post.find({ user: userId })
+      posts = await Post.find({ user: userId }).populate('user')
     } else {
       // Otherwise, find all posts
-      posts = await Post.find({})
+      posts = await Post.find({}).populate('user')
     }
     res.status(200).json(posts) // Send posts
   } catch (error) {
@@ -45,7 +44,7 @@ const UpdatePost = async (req, res) => {
   try {
     const updateFields = {
       postImage: req.file.filename,
-      postDescription: req.file.postDescription
+      postDescription: req.body.postDescription
     }
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.post_id,

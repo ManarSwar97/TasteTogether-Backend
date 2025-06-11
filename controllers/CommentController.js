@@ -1,7 +1,7 @@
 const { Comment } = require('../models')
 const GetComments = async (req, res) => {
   try {
-    const comments = await Comment.find({})
+    const comments = await Comment.find({}).populate('user')
     res.status(200).send(comments)  
 } catch (error) {
     throw error
@@ -27,8 +27,7 @@ const CreateComment = async (req, res) => {
 const GetCommentsByPost = async(req, res) =>{
   try{
   const postId = req.params.postId
-  console.log(postId)
-  const comments = await Comment.find({post: postId}).populate('user', 'username') 
+  const comments = await Comment.find({post: postId}).populate('user')
   res.status(200).send(comments);  
   }
   catch (error) {
