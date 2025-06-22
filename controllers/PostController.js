@@ -15,10 +15,10 @@ const GetPosts = async (req, res) => {
     let posts //define post
     if (userId) {
       // If userId exists, find posts for that user
-      posts = await Post.find({ user: userId }).populate('user')
+      posts = await Post.find({ user: userId }).populate('user').sort({ createdAt: -1 })
     } else {
       // Otherwise, find all posts
-      posts = await Post.find({}).populate('user')
+      posts = await Post.find({}).populate('user').sort({ createdAt: -1 })
     }
     res.status(200).json(posts) // Send posts
   } catch (error) {
